@@ -1,28 +1,31 @@
 <?php
 include("conexion.php");
 $connection = conectar();
- 
-if (!empty($_POST["sing-up"])) {
-    if (empty($_POST["email"]) || empty($_POST["pass"])) {
-        echo '<div class="alert alert-danger">Los campos están vacíos</div>';
-    } else {
-        $email = $_POST["email"];
-        $clave = $_POST["pass"];
 
-        $sql = $connection->prepare("SELECT * FROM table_login WHERE email = ? AND pass = ?");
-        $sql->bind_param("ss", $email, $clave);
-        $sql->execute();
-        $resultado = $sql->get_result();
+if (isset($_POST["login"])) {
+    $email = $_POST["email"];
+    $password = $_POST["pass"];
 
-        if ($resultado->num_rows > 0) {
-            echo '<div class="alert alert-success">Inicio de sesión correcto</div>';
-      
+    $stmt = $connection->prepare("SELECT pass FROM table_login WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $hashedPwdFromDB = $row["pass"];
+
+        if (password_verify($password, $hashedPwdFromDB)) {
+            header("Location: index.php");
+            exit(); 
         } else {
             echo '<div class="alert alert-danger">Usuario o contraseña incorrectos</div>';
         }
-
-        $sql->close();
+    } else {
+        echo '<div class="alert alert-danger">Usuario o contraseña incorrectos</div>';
     }
-}
 
+    $stmt->close();
+    $connection->close();
+}
 ?>

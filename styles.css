@@ -3,7 +3,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 body {
-    display: flex;
+    display: flex; 
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -69,8 +69,7 @@ a {
 }
 .overlay-container {
     position: relative;
-    width: 100%;
-    height: 100%;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,14 +77,15 @@ a {
 .overlay {
     background: linear-gradient(to right, #332d5a, #5a45b4);    
     color: #fff;
-    width: auto;
-    height: 450px;
+    width: 160px; 
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
+
 .overlay a {
     color: #fff;
     text-decoration: none;
@@ -96,4 +96,17 @@ a {
 }
 .overlay a:hover {
     color: #c3c3c3; 
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
